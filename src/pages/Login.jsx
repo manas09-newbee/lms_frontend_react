@@ -11,14 +11,20 @@ function Login() {
   const handleLogin = async () => {
 
     // Example response (replace with API later)
-    const fakeResponse = {
-      role: email.includes("admin") ? "admin" : "student"
-    };
+    // const fakeResponse = {
+    //   role: email.includes("admin") ? "admin" : "student"
+    // };
 
-    if (fakeResponse.role === "admin") {
-      navigate("/admin/dashboard");
+    // if (fakeResponse.role === "admin") {
+    //   navigate("/admin/dashboard");
+    // } else {
+    //   navigate("/student/dashboard");
+    // }
+
+    if (email === "admin@test.com") {
+    navigate("/admin/dashboard");
     } else {
-      navigate("/student/dashboard");
+    navigate("/student/dashboard");
     }
 
   };
