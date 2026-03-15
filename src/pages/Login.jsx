@@ -1,65 +1,90 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const [email,setEmail] = useState("");
+const [password,setPassword] = useState("");
 
-  const handleLogin = async () => {
+function handleLogin(e){
 
-    // Example response (replace with API later)
-    // const fakeResponse = {
-    //   role: email.includes("admin") ? "admin" : "student"
-    // };
+e.preventDefault();
 
-    // if (fakeResponse.role === "admin") {
-    //   navigate("/admin/dashboard");
-    // } else {
-    //   navigate("/student/dashboard");
-    // }
+const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    if (email === "admin@test.com") {
-    navigate("/admin/dashboard");
-    } else {
-    navigate("/student/dashboard");
-    }
+const user = users.find(
+u => u.email === email && u.password === password
+);
 
-  };
+if(!user){
 
-  return (
-    <div className="login-page">
+alert("Invalid credentials");
+return;
 
-      <div className="login-brand">
-        <h1>LMS Portal</h1>
-        <p>Smart Learning & Assessment Platform</p>
-      </div>
+}
 
-      <div className="login-modal">
+if(user.role === "admin"){
+navigate("/admin/dashboard");
+}else{
+navigate("/student/dashboard");
+}
 
-        <h2>Welcome...</h2>
+}
 
-        <input
-          type="email"
-          placeholder="Email Address"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+return(
 
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+<div className="login-page">
 
-        <button className="btn-primary" onClick={handleLogin}>
-          Login
-        </button>
+<div className="login-brand">
+<h1>LMS Portal</h1>
+<p>Smart Learning & Assessment Platform</p>
+</div>
 
-      </div>
-    </div>
-  );
+<form className="login-modal" onSubmit={handleLogin}>
+
+<h2>Welcome...</h2>
+
+<input
+type="email"
+placeholder="Email Address"
+value={email}
+onChange={(e)=>setEmail(e.target.value)}
+required
+/>
+
+<input
+type="password"
+placeholder="Password"
+value={password}
+onChange={(e)=>setPassword(e.target.value)}
+required
+/>
+
+<button className="btn-primary">
+Login
+</button>
+
+<p style={{textAlign:"center",marginTop:"10px"}}>
+
+Don't have an account?
+
+<span
+style={{color:"#2563eb",cursor:"pointer",fontWeight:"600"}}
+onClick={()=>navigate("/register")}
+>
+ Register
+</span>
+
+</p>
+
+</form>
+
+</div>
+
+)
+
 }
 
 export default Login;
