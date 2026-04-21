@@ -1,13 +1,51 @@
-function Tests() {
-  return (
-    <div className="placeholder">
-      <h2>Upcoming / Ongoing Tests</h2>
+import TestCardAdmin from "./TestCardAdmin";
 
-      <div className="test-list">
-        <p>📌 React Mock Test — Tomorrow</p>
-        <p>🟢 Java Quiz — Live Now</p>
-        <p>📅 DSA Weekly Test — 20 March</p>
+function Tests() {
+  const ongoingTests = [
+    {
+      title: "Java Quiz",
+      course: "Programming",
+      date: "Live Now",
+      duration: "30 mins",
+    },
+  ];
+
+  const upcomingTests = [
+    {
+      title: "React Midterm",
+      course: "Web Development",
+      date: "12 April",
+      duration: "60 mins",
+    },
+    {
+      title: "DSA Weekly Test",
+      course: "Data Structures",
+      date: "20 March",
+      duration: "45 mins",
+    },
+  ];
+
+  return (
+    <div className="admin-tests-section">
+      
+      {/* 🔥 Ongoing Tests */}
+      <h2 className="admin-tests-heading">Ongoing Tests</h2>
+      <div className="admin-tests-grid">
+        {ongoingTests.map((test, index) => (
+          <TestCardAdmin key={index} {...test} status="ongoing" />
+        ))}
       </div>
+
+      {/* ⬇️ Upcoming Tests */}
+      <h2 className="admin-tests-heading admin-tests-heading-secondary">
+        Upcoming Tests
+      </h2>
+      <div className="admin-tests-grid">
+        {upcomingTests.map((test, index) => (
+          <TestCardAdmin key={index} {...test} status="upcoming" />
+        ))}
+      </div>
+
     </div>
   );
 }
