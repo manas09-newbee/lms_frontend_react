@@ -5,61 +5,47 @@ import {
   AlertTriangle
 } from "lucide-react";
 
-function ActivityItem({ activity }) {
+function ActivityItem({ activity, index, onClick }) {
 
   const getIcon = () => {
     switch (activity.type) {
-      case "student":
-        return <User size={18} />;
-      case "test":
-        return <ClipboardList size={18} />;
-      case "course":
-        return <BookOpen size={18} />;
-      case "alert":
-        return <AlertTriangle size={18} />;
-      default:
-        return <User size={18} />;
-    }
-  };
-
-  const getColor = () => {
-    switch (activity.type) {
-      case "student":
-        return "blue";
-      case "test":
-        return "green";
-      case "course":
-        return "purple";
-      case "alert":
-        return "red";
-      default:
-        return "";
+      case "student": return "👤";
+      case "test": return "📝";
+      case "course": return "📚";
+      case "alert": return "⚠️";
+      default: return "📌";
     }
   };
 
   return (
-    <div className={`activity-item ${getColor()}`}>
+    <div
+      className={`activity-card ${activity.type} ${activity.unread ? "unread" : ""}`}
+      onClick={onClick}
+      style={{ animationDelay: `${index * 0.08}s` }}
+    >
 
-      {/* AVATAR */}
-      <div className="activity-avatar">
+      {/* STATUS DOT */}
+      {activity.unread && <div className="activity-status"></div>}
+
+      {/* ICON */}
+      <div className="activity-icon">
         {getIcon()}
       </div>
 
       {/* CONTENT */}
       <div className="activity-content">
 
-        {/* NAME + TIME */}
         <div className="activity-header-line">
           <span className="activity-title">{activity.title}</span>
-          <span className="activity-time">• {activity.time}</span>
+          <span className="activity-time">{activity.time}</span>
         </div>
 
-        {/* DESCRIPTION */}
         <div className="activity-desc">
           {activity.description}
         </div>
 
       </div>
+
     </div>
   );
 }
